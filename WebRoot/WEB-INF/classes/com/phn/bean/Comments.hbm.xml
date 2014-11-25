@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.phn.bean.Comments" table="t_comment">
+		<id name="id" column="id" type="int">
+			<generator class="increment" />
+		</id>
+		<property name="content" column="content" type="string" length="20000"></property>
+		<property name="floor" column="floor" type="int"></property>
+		<property name="integral" column="integral" type="int"></property>
+		<property name="status" column="status" type="int"></property>
+		<property name="commentTime" column="comment_time" type="java.sql.Timestamp"></property>
+		<!-- 多对一，多个评论对应一个用户 -->
+		<many-to-one name="commentsUser" class="com.phn.bean.Users" lazy="proxy" cascade="save-update" fetch="select">
+			<column name="comments_user_id" not-null="true"></column>
+		</many-to-one>
+		<!-- 多对一，多个评论对应一个帖子 -->
+		<many-to-one name="commentsTopic" class="com.phn.bean.Topics" lazy="proxy" cascade="save-update" fetch="select">
+			<column name="comments_topic_id" not-null="true"></column>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

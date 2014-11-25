@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      	      http://www.springframework.org/schema/beans/spring-beans.xsd  
+              http://www.springframework.org/schema/aop
+              http://www.springframework.org/schema/aop/spring-aop.xsd  
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context.xsd  
+              http://www.springframework.org/schema/tx
+              http://www.springframework.org/schema/tx/spring-tx.xsd  
+			  http://www.springframework.org/schema/util
+			  http://www.springframework.org/schema/util/spring-util.xsd "
+	default-lazy-init="false">
+
+	<!-- 使用annotation定义事务 --><!-- 支持 @Transactional 标记 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>jdbc:mysql://localhost:3306/dsjava?useUnicode=true&amp;characterEncoding=utf8</value>
+		</property>
+		<property name="user" value="root" />
+		<property name="password" value="123456" />
+		<!-- 设置数据库连接池的最大连接数 -->
+		<property name="maxPoolSize">
+			<value>50</value>
+		</property>
+		<!-- 设置数据库连接池的最小连接数 -->
+		<property name="minPoolSize">
+			<value>5</value>
+		</property>
+		<!-- 设置数据库连接池的初始化连接数 -->
+		<property name="initialPoolSize">
+			<value>5</value>
+		</property>
+		<!-- 设置数据库连接池的连接的最大空闲时间,单位为秒 -->
+		<property name="maxIdleTime">
+			<value>20</value>
+		</property>
+		<!--c3p0缓存Statement的数量数 -->
+		<property name="maxStatements">
+			<value>50</value>
+		</property>
+		<!-- 当连接池里面的连接用完的时候，C3P0一下获取的新的连接数 -->
+		<property name="acquireIncrement">
+			<value>20</value>
+		</property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/phn/bean/Grades.hbm.xml</value>
+				<value>com/phn/bean/Users.hbm.xml</value>
+				<value>com/phn/bean/Topics.hbm.xml</value>
+				<value>com/phn/bean/Comments.hbm.xml</value>
+				<value>com/phn/bean/Announces.hbm.xml</value>
+				<value>com/phn/bean/Types.hbm.xml</value>
+				<value>com/phn/bean/Categorys.hbm.xml</value>
+				<value>com/phn/bean/Helps.hbm.xml</value>
+				<value>com/phn/bean/News.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<!-- 解决session关闭问题 -->
+				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+				<!-- <prop key="current_session_context_class">thread</prop> -->
+				<!-- 自动创建|更新|验证数据库表结构 validate 加载hibernate时，验证创建数据库表结构 create 每次加载hibernate，重新创建数据库表结构 
+					create-drop 加载hibernate时创建，退出是删除表结构 update 加载hibernate自动更新数据库结构 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<!-- <prop key="hibernate.format_sql">true</prop> -->
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+
+	<!-- 用户 -->
+	<bean id="UserDao" class="com.phn.dao.impl.UserDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UserService" class="com.phn.service.impl.UserServiceImpl"
+		scope="singleton">
+		<property name="userDao">
+			<ref bean="UserDao" />
+		</property>
+		<property name="pageDao">
+			<ref bean="PageDao" />
+		</property>
+		<property name="topicDao">
+			<ref bean="TopicDao" />
+		</property>
+		<property name="commentDao">
+			<ref bean="CommentDao" />
+		</property>
+		<property name="newDao">
+			<ref bean="NewDao" />
+		</property>
+		<property name="gradeDao">
+			<ref bean="GradeDao" />
+		</property>
+	</bean>
+	<bean id="UserAction" class="com.phn.action.UserAction" scope="prototype">
+		<property name="userService">
+			<ref bean="UserService" />
+		</property>
+	</bean>
+	<bean id="GradeDao" class="com.phn.dao.impl.GradeDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FileUploadAction" class="com.phn.action.FileUpload"
+		scope="prototype">
+		<property name="userService">
+			<ref bean="UserService" />
+		</property>
+	</bean>
+	<!-- 分页 -->
+	<bean id="PageDao" class="com.phn.dao.impl.PageDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 论坛公告 -->
+	<bean id="AnnounceDao" class="com.phn.dao.impl.AnnounceDaoImpl"
+		scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AnnounceService" class="com.phn.service.impl.AnnounceServiceImpl"
+		scope="singleton">
+		<property name="announceDao">
+			<ref bean="AnnounceDao" />
+		</property>
+		<property name="pageDao">
+			<ref bean="PageDao" />
+		</property>
+	</bean>
+	<bean id="AnnounceAction" class="com.phn.action.AnnounceAction"
+		scope="prototype">
+		<property name="announceService">
+			<ref bean="AnnounceService" />
+		</property>
+	</bean>
+	<!-- 论坛帮助 -->
+	<bean id="HelpDao" class="com.phn.dao.impl.HelpDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="HelpService" class="com.phn.service.impl.HelpServiceImpl"
+		scope="singleton">
+		<property name="helpDao">
+			<ref bean="HelpDao" />
+		</property>
+		<property name="pageDao">
+			<ref bean="PageDao" />
+		</property>
+	</bean>
+	<bean id="HelpAction" class="com.phn.action.HelpAction" scope="prototype">
+		<property name="helpService">
+			<ref bean="HelpService" />
+		</property>
+	</bean>
+
+	<!-- 帖子小种类 -->
+	<bean id="TypeDao" class="com.phn.dao.impl.TypeDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TypeService" class="com.phn.service.impl.TypeServiceImpl"
+		scope="singleton">
+		<property name="typeDao">
+			<ref bean="TypeDao" />
+		</property>
+		<property name="pageDao">
+			<ref bean="PageDao" />
+		</property>
+		<property name="cateDao">
+			<ref bean="CategoryDao" />
+		</property>
+	</bean>
+	<bean id="TypeAction" class="com.phn.action.TypeAction" scope="prototype">
+		<property name="typeService">
+			<ref bean="TypeService" />
+		</property>
+	</bean>
+	<!-- 帖子大种类 -->
+	<bean id="CategoryDao" class="com.phn.dao.impl.CategoryDaoImpl"
+		scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CategoryService" class="com.phn.service.impl.CategoryServiceImpl"
+		scope="singleton">
+		<property name="cateDao">
+			<ref bean="CategoryDao" />
+		</property>
+		<property name="typeDao">
+			<ref bean="TypeDao" />
+		</property>
+		<property name="topicDao">
+			<ref bean="TopicDao" />
+		</property>
+	</bean>
+	<bean id="CategoryAction" class="com.phn.action.CategoryAction"
+		scope="prototype">
+		<property name="cateService">
+			<ref bean="CategoryService" />
+		</property>
+	</bean>
+	<!-- 帖子 -->
+	<bean id="TopicDao" class="com.phn.dao.impl.TopicDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TopicService" class="com.phn.service.impl.TopicServiceImpl"
+		scope="singleton">
+		<property name="topicDao">
+			<ref bean="TopicDao" />
+		</property>
+		<property name="typeDao">
+			<ref bean="TypeDao" />
+		</property>
+		<property name="pageDao">
+			<ref bean="PageDao" />
+		</property>
+		<property name="commentDao">
+			<ref bean="CommentDao" />
+		</property>
+		<property name="newDao">
+			<ref bean="NewDao" />
+		</property>
+		<property name="userDao">
+			<ref bean="UserDao" />
+		</property>
+	</bean>
+	<bean id="TopicAction" class="com.phn.action.TopicAction" scope="prototype">
+		<property name="topicService">
+			<ref bean="TopicService" />
+		</property>
+	</bean>
+	<!-- 评论 -->
+	<bean id="CommentDao" class="com.phn.dao.impl.CommentDaoImpl"
+		scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CommentService" class="com.phn.service.impl.CommentServiceImpl"
+		scope="singleton">
+		<property name="commentDao">
+			<ref bean="CommentDao" />
+		</property>
+		<property name="pageDao">
+			<ref bean="PageDao" />
+		</property>
+		<property name="topicDao">
+			<ref bean="TopicDao" />
+		</property>
+		<property name="newDao">
+			<ref bean="NewDao" />
+		</property>
+	</bean>
+	<bean id="CommentAction" class="com.phn.action.CommentAction"
+		scope="prototype">
+		<property name="commentService">
+			<ref bean="CommentService" />
+		</property>
+	</bean>
+	<bean id="NewDao" class="com.phn.dao.impl.NewDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- <import resource="classes/spring-dsa.xml" /> -->
+</beans>

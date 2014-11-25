@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.phn.bean.News" table="t_new">
+		<id name="id" column="id" type="int">
+			<generator class="increment" />
+		</id>
+		<property name="newTime" column="new_time" type="java.sql.Timestamp"></property>
+		<property name="status" column="status" type="int"></property>
+		<!-- 多对一，多个发布的消息对应一个用户 -->
+		<many-to-one name="newsCommentUser" class="com.phn.bean.Users" lazy="proxy">
+			<column name="news_comment_user_id" not-null="true"></column>
+		</many-to-one>
+		<!-- 多对一，多个消息对应一个帖子 -->
+		<many-to-one name="newsTopic" class="com.phn.bean.Topics" lazy="proxy" >
+			<column name="news_topic_id" not-null="true"></column>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+.links{
+	margin-top:1px;
+	border-bottom:1px solid white;
+	width:185px;
+	height:50px;
+	line-height:50px;
+	float:left;
+	color:white;
+	font-size:20px;
+	font-family:"微软雅黑";
+	text-align:center;
+	background-color:#254472;
+
+}
+.links:LINK,.links:VISITED{
+	background-color:#6699CC;
+}
+.links:HOVER{
+	background-color:#A2C1DE;
+}
+a:link{text-decoration:none; }     
+a:active{text-decoration:none; }
+a:visited{ text-decoration:none;}
+a:hover{ text-decoration:underline;}

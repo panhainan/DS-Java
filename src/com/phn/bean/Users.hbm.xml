@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.phn.bean.Users" table="t_user"
+		batch-size="5">
+		<id name="id" column="id" type="int">
+			<generator class="increment" />
+		</id>
+		<property name="username" column="username" type="string"
+			length="20"></property>
+		<property name="password" column="password" type="string"
+			length="20"></property>
+		<property name="sex" column="sex" type="string" length="2"></property>
+		<property name="picture" column="picture" type="string"></property>
+		<property name="email" column="email" type="string" length="20"></property>
+		<property name="comefrom" column="come_from" type="string"
+			length="200"></property>
+		<property name="introduction" column="introduction" type="string"
+			length="1000"></property>
+		<property name="profession" column="profession" type="string"
+			length="40"></property>
+		<property name="gradeIntegral" column="grade_integal" type="int"></property>
+		<property name="integral" column="integral" type="int"></property>
+		<property name="roleId" column="role_id" type="int"></property>
+		<property name="nickname" column="nickname" type="string"
+			length="32"></property>
+		<property name="clock" column="clock" type="int"></property>
+		<property name="topCount" column="topic_count" type="int"></property>
+		<property name="comCount" column="comment_count" type="int"></property>
+		<property name="registerTime" column="register_time" type="java.sql.Timestamp"></property>
+		<property name="status" column="status" type="int"></property>
+		<many-to-one name="usersGrade" class="com.phn.bean.Grades"
+			lazy="proxy">
+			<column name="users_grade_id" not-null="true"></column>
+		</many-to-one>
+		<!-- 一对多，一个用户有多个帖子 -->
+		<set name="userTopics" lazy="true">
+			<key column="topics_user_id" foreign-key="id"></key>
+			<one-to-many class="com.phn.bean.Topics" />
+		</set>
+		<!-- 一对多，一个用户有多个评论 -->
+		<set name="userComments" lazy="true">
+			<key column="comments_user_id" foreign-key="id"></key>
+			<one-to-many class="com.phn.bean.Comments" />
+		</set>
+		<!-- 一对多，一个用户会发布多条评论产生多条消息 -->
+		<set name="userCommentNews">
+			<key column="news_comment_user_id" foreign-key="id"></key>
+			<one-to-many class="com.phn.bean.News" />
+		</set>
+	</class>
+</hibernate-mapping>

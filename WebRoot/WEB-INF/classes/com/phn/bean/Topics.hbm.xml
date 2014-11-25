@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.phn.bean.Topics" table="t_topic" batch-size="10">
+		<id name="id" column="id" type="int">
+			<generator class="increment" />
+		</id>
+		<property name="title" column="title" type="string" length="50"></property>
+		<property name="content" column="content" type="string"
+			length="20000"></property>
+		<property name="countComment" column="comment_count" type="int"></property>
+		<property name="niceTopic" column="nice_topic" type="int"></property>
+		<property name="topicTime" column="topic_time" type="java.sql.Timestamp"></property>
+		<property name="integral" column="integral" type="int"></property>
+		<property name="status" column="status" type="int"></property>
+		<!-- 多对一，多个帖子对应一个用户 -->
+		<many-to-one name="topicsUser" class="com.phn.bean.Users"
+			cascade="save-update" fetch="select" lazy="proxy">
+			<column name="topics_user_id" not-null="true"></column>
+		</many-to-one>
+		<!-- 多对一，多个帖子对应一个类型 -->
+		<many-to-one name="topicsType" class="com.phn.bean.Types"
+			cascade="save-update" fetch="select" lazy="proxy">
+			<column name="topics_type_id" not-null="true"></column>
+		</many-to-one>
+
+		<!-- 一对多，一个帖子有多个评论 -->
+		<set name="topicComments" lazy="true">
+			<key column="comments_topic_id" foreign-key="id"></key>
+			<one-to-many class="com.phn.bean.Comments" />
+		</set>
+
+	</class>
+</hibernate-mapping>

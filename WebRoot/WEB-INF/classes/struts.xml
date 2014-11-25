@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.custom.i18n.resources" value="globalMessages" /><!-- 
+		指定国际化资源文件 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" /><!-- 指定编码方式 -->
+	<package name="json" namespace="/" extends="json-default,struts-default">
+		<interceptors>
+			<interceptor name="userAuthority" class="com.phn.interceptor.UserInterceptor"></interceptor>
+			<interceptor name="adminAuthority" class="com.phn.interceptor.AdminInterceptor"></interceptor>
+		</interceptors>
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>
+		<action name="user_CheckName" class="UserAction" method="CheckName">
+			<result type="json">
+			</result>
+		</action>
+		<action name="user_CheckNic" class="UserAction" method="CheckNic">
+			<result type="json">
+			</result>
+		</action>
+		<action name="cate_new_getType" class="CategoryAction" method="new_getType">
+			<result name="cate_new_getType_ok_json" type="json">
+				<param name="includeProperties">listType.*</param>
+			</result>
+			<interceptor-ref name="userAuthority">
+				<param name="includeMethods">new_getType</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="cate_ManageAllType" class="CategoryAction"
+			method="ManageAllType">
+			<result name="cate_manageAllType_ok_json" type="json">
+				<param name="includeProperties">listType.*,category.*</param>
+			</result>
+			<interceptor-ref name="adminAuthority">
+				<param name="includeMethods">ManageAllType</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+	</package>
+	<package name="user" namespace="/" extends="struts-default">
+		<!-- 用户相关操作拦截器 -->
+		<interceptors>
+			<interceptor name="userAuthority" class="com.phn.interceptor.UserInterceptor"></interceptor>
+			<interceptor name="adminAuthority" class="com.phn.interceptor.AdminInterceptor"></interceptor>
+			<interceptor name="superAdminAuthority"
+				class="com.phn.interceptor.SuperAdminInterceptor"></interceptor>
+		</interceptors>
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="error">/error.jsp</result>
+			<result name="a_error">/a/a_error.jsp</result>
+		</global-results>
+		<!-- 用户action -->
+		<action name="user_*" class="UserAction" method="{1}">
+			<!-- 用户登录返回结果处理 -->
+			<result name="user_login_ok" type="redirect">/index.jsp</result>
+			<result name="login_error">/error.jsp</result>
+			<result name="user_register_ok" type="redirect">/index.jsp</result>
+			<result name="user_logout_ok" type="redirect">/login.jsp</result>
+			<result name="user_goUser_ok">/user.jsp</result>
+			<result name="user_goUserAllTopics_ok">/userTopics.jsp</result>
+			<result name="user_goHome_ok">/u/home.jsp</result>
+			<result name="user_getTopics_ok">/u/topics.jsp</result>
+			<result name="user_getComments_ok">/u/comments.jsp</result>
+			<result name="user_getNews_ok">/u/news.jsp</result>
+			<result name="user_updateInfo_ok">/u/updateInfo.jsp</result>
+			<result name="user_updatePass_ok">/u/updatePass.jsp</result>
+			<interceptor-ref name="userAuthority">
+				<param name="includeMethods">Logout,GoHome,GetTopics,GetComments,GetNews,UpdateInfo,UpdatePass</param>
+			</interceptor-ref>
+			<result name="user_manageAll_ok">/a/manageUsers.jsp</result>
+			<result name="user_manageGoUser_ok">/a/user.jsp</result>
+			<result name="user_manageGoUserAllTopics_ok">/a/userTopics.jsp</result>
+			<result name="user_manageRole_ok" type="redirectAction">user_ManageAll</result>
+			<result name="user_manageARole_ok" type="redirectAction">user_ManageAll
+			</result>
+			<result name="user_manageSRole_ok" type="redirectAction">user_ManageAll
+			</result>
+			<result name="user_manageDelete_ok" type="redirectAction">user_ManageAll
+			</result>
+			<result name="user_manageUnDelete_ok" type="redirectAction">user_ManageAll
+			</result>
+			<interceptor-ref name="superAdminAuthority">
+				<param name="includeMethods">ManageAll,ManageDelete,ManageUnDelete,ManageARole,ManageSRole</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="anno_*" class="AnnounceAction" method="{1}">
+			<result name="anno_getIndex_ok">/indexAnno.jsp</result>
+			<result name="anno_getAll_ok">/announce.jsp</result>
+			<result name="anno_mangeAll_ok">/a/manageAnnos.jsp</result>
+			<result name="anno_manageGoUpdate_ok">/a/updateAnno.jsp</result>
+			<result name="anno_manageUpdate_ok" type="redirectAction">anno_ManageAll
+			</result>
+			<result name="anno_ManageAdd_ok" type="redirectAction">anno_ManageAll</result>
+			<interceptor-ref name="adminAuthority">
+				<param name="includeMethods">ManageAll,ManageGoUpdate,ManageUpdate,ManageAdd</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="help_*" class="HelpAction" method="{1}">
+			<result name="help_getAll_ok">/help.jsp</result>
+			<result name="help_getIndex_ok">/indexHelp.jsp</result>
+			<result name="help_mangeAll_ok">/a/manageHelps.jsp</result>
+			<result name="help_manageGoUpdate_ok">/a/updateHelp.jsp</result>
+			<result name="help_manageUpdate_ok" type="redirectAction">help_ManageAll</result>
+			<result name="help_ManageAdd_ok" type="redirectAction">help_ManageAll</result>
+			<interceptor-ref name="adminAuthority">
+				<param name="includeMethods">ManageAll,ManageGoUpdate,ManageUpdate,ManageAdd</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+
+		<action name="cate_*" class="CategoryAction" method="{1}">
+			<result name="cate_new_getAll_ok">/u/newTopic.jsp</result>
+			<result name="cate_getAll_ok">/type.jsp</result>
+			<result name="cate_getType_ok">/typeCate.jsp</result>
+			<result name="cate_go_ok">/cate.jsp</result>
+			<interceptor-ref name="userAuthority">
+				<param name="includeMethods">new_getAll</param>
+			</interceptor-ref>
+			<result name="cate_manageAdd_ok" type="redirectAction">cate_ManageAll</result>
+			<result name="cate_manageAll_ok">/a/manageCates.jsp</result>
+			<result name="cate_manageUpdate_ok" type="redirectAction">cate_ManageAll
+			</result>
+			<interceptor-ref name="adminAuthority">
+				<param name="includeMethods">ManageAll,ManageAdd,ManageUpdate</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="type_*" class="TypeAction" method="{1}">
+			<result name="type_go_ok">/theType.jsp</result>
+			<result name="type_manageAdd_ok" type="redirectAction">cate_ManageAll</result>
+			<result name="type_manageUpdate_ok" type="redirectAction">cate_ManageAll
+			</result>
+			<interceptor-ref name="adminAuthority">
+				<param name="includeMethods">ManageAdd,ManageUpdate</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="topic_*" class="TopicAction" method="{1}">
+			<result name="topic_add_ok" type="redirectAction">
+				<param name="actionName">topic_goTopic</param>
+				<param name="topic.id">${topic.id}</param>
+			</result>
+			<result name="topic_add_no">/error.jsp</result>
+			<result name="topic_go_ok">/u/theTopic.jsp</result>
+			<result name="topic_getIndexHot_ok">/indexHotTopic.jsp</result>
+			<result name="topic_getIndexFresh_ok">/indexFreshTopic.jsp</result>
+			<result name="topic_getIndexNice_ok">/indexNiceTopic.jsp</result>
+			<result name="topic_getALL_ok">/allTopic.jsp</result>
+			<result name="topic_getHot_ok">/hotTopic.jsp</result>
+			<result name="topic_getNice_ok">/niceTopic.jsp</result>
+			<result name="topic_search_ok">/searchResult.jsp</result>
+			<result name="topic_goEnd_ok">/u/endTopic.jsp</result>
+			<result name="topic_end_ok" type="redirectAction">
+				<param name="actionName">topic_goTopic</param>
+				<param name="topic.id">${topic.id}</param>
+			</result>
+			<result name="topic_goTopicByNews_ok">/u/theTopic.jsp</result>
+			<interceptor-ref name="userAuthority">
+				<param name="includeMethods">add,GoEnd,EndTopic,goTopicByNews</param>
+			</interceptor-ref>
+			<result name="topic_mangeAll_ok">/a/manageTopics.jsp</result>
+			<result name="topic_manageNice_ok" type="redirectAction">topic_ManageAll
+			</result>
+			<result name="topic_manageUnNice_ok" type="redirectAction">topic_ManageAll
+			</result>
+			<interceptor-ref name="adminAuthority">
+				<param name="includeMethods">ManageAll,ManageNice,ManageUnNice</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="comment_*" class="CommentAction" method="{1}">
+			<result name="comment_new_no">/error.jsp</result>
+			<result name="comment_new_ok" type="redirectAction">
+				<param name="actionName">topic_goTopic</param>
+				<param name="topic.id">${topic.id}</param>
+				<param name="nowPage">${nowPage}</param>
+			</result>
+			<result name="comment_delete_ok" type="redirectAction">
+				<param name="actionName">topic_goTopic</param>
+				<param name="topic.id">${topic.id}</param>
+			</result>
+			<result name="comment_getAll_ok">/u/theTopicComments.jsp</result>
+			<interceptor-ref name="userAuthority">
+				<param name="includeMethods">newComment,Delete</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="uploadUserPic" class="FileUploadAction" method="userPicUpload">
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpg</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<param name="savePath">/u/uploadPic</param>
+			<result name="fileupload_ok">/u/updateInfo.jsp</result>
+			<result name="fileupload_no">/error.jsp</result>
+		</action>
+	</package>
+
+</struts>

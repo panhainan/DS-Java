@@ -1,0 +1,163 @@
+.background {
+	width: 1004px;
+	overflow: auto;
+	background-color: #F5F5F5;
+	margin: 0 auto;
+	min-height: 700px;
+}
+
+.leftBodyBlank {
+	width: 22px;
+	min-height: 300px;
+	float: left;
+}
+
+.topBody {
+	width: 960px;
+	height: 24px;
+	margin-top: 10px;
+	float: left;
+	font-size: 14px;
+	font-family: 微软雅黑;
+}
+
+.leftBody {
+	width: 740px;
+	margin-top: 10px;
+	float: left;
+}
+
+.rightBody {
+	width: 200px;
+	margin-left: 20px;
+	margin-top: 10px;
+	float: left;
+}
+
+.hot {
+	width: 740px;
+	height: 365px;
+	float: left;
+}
+
+.fresh {
+	width: 740px;
+	height: 365px;
+	margin-top: 20px;
+	float: left;
+}
+
+.classics {
+	width: 740px;
+	height: 365px;
+	margin-top: 20px;
+	float: left;
+}
+
+.announces {
+	width: 200px;
+	height: 250px;
+	float: left;
+	background-color: white;
+}
+
+.newButton {
+	width: 200px;
+	height: 50px;
+	margin-top: 20px;
+	float: left;
+	/* background-color: #6699CC; */
+}
+
+.newButton input {
+	width: 200px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 24px;
+	font-family: 微软雅黑;
+	color: white;
+	background-color: #6699CC;
+	border: 0;
+}
+
+.newButton input:hover {
+	background-color: #71AAE3;
+	border: 0;
+}
+
+.hero {
+	width: 200px;
+	height: 350px;
+	margin-top: 20px;
+	float: left;
+	background-color: white;
+}
+
+.helps {
+	width: 200px;
+	min-height: 250px;
+	margin-top: 20px;
+	float: left;
+	background-color: white;
+}
+
+.friendLink {
+	width: 200px;
+	height: 200px;
+	margin-top: 20px;
+	float: left;
+	background-color: white;
+}
+
+.ltitle {
+	width: 740px;
+	height: 30px;
+	line-height: 30px;
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: 微软雅黑;
+	font-style: normal;
+	background-image: url('../image/title.png');
+	text-align: left;
+}
+
+.ltitle a:LINK,.ltitle a:VISITED {
+	color: #6699CC;
+	text-decoration: none;
+}
+
+.ltitle a:HOVER {
+	color: #4B83C1;
+	text-decoration: none;
+}
+
+.hotContent {
+	height: 335px;
+	background-color: white;
+	border-top: none;
+}
+
+.freshContent {
+	height: 335px;
+	background-color: white;
+	border-top: none;
+}
+
+.classicsContent {
+	height: 335px;
+	background-color: white;
+	border-top: none;
+}
+
+.rtitle {
+	height: 30px;
+	line-height: 30px;
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: 微软雅黑;
+	font-style: normal;
+	background-image: url('../image/title2.png');
+	text-align: left;
+}

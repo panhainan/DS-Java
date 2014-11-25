@@ -1,0 +1,45 @@
+.body {
+	width: 1004px;
+	height: 666px;
+	border: 1px solid #2B4A78;
+	margin: 0 auto;
+	margin-top: 0px;
+	text-align: left;
+	background-repeat: no-repeat;
+	background-image: url();
+}
+
+.top {
+	width: 1004px;
+	height: 120px;
+	border: 1px solid #2B4A78;
+	float: left;
+}
+
+.left {
+	width: 185px;
+	height: 540px;
+	border: 1px solid #2B4A78;
+	float: left;
+	margin-left: 1px;
+	background-color: #254472;
+}
+
+.right {
+	margin-left: 2px;
+	width: 810px;
+	height: 540px;
+	border: 1px solid #2B4A78;
+	float: left;
+	color: #4D9EF0;
+}
+
+table {
+	width: 810px;
+	max-height: 450px;
+	text-align: center;
+	font-size: 14px;
+	word-wrap: break-word;
+	word-break: break-all;
+	table-layout: fixed;
+}

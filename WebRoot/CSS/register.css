@@ -1,0 +1,39 @@
+.background {
+	width: 1004px;
+	overflow: auto;
+	background-color: #F5F5F5;
+	margin: 0 auto;
+	min-height: 700px;
+}
+
+.register{
+	margin-top: 80px;
+	margin-left: 100px;
+	margin-bottom: 10px;
+	/* padding-top:30px; */
+	width: 800px;
+	height: 400px;
+	background-color: #F8F8F8;
+}
+#uName,#uNic,#uPass,#uRPass,#uEmail {
+	height: 30px;
+	width: 220px;
+	padding-left: 6px;
+	font-size: 17px;
+	border: 1px solid #9ECFFE;
+}
+
+
+.butt {
+	background-color: #6699CC;
+	width: 80px;
+	height: 30px;
+	border: 0;
+	color: white;
+	font-size: 18px;
+}
+
+.butt:hover {
+	background-color: #71AAE3;
+	border: 0;
+}
