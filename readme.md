@@ -18,6 +18,8 @@
 服务器：Tomcat 7.x
 
 用到的其他项目：百度富文本编辑器 UEditor
-
+<br/><br/><br/>
+<font color="red">注意：</font>**打开根目录里面的sql文件，在数据库软件中建一个dsjava数据库，然后运行sql文件。还有数据库默认用户名root和密码123456，如果需要修改请到src下面修改database.properties文件**
+<br/><br/><br/>
 点击查看<a href="https://github.com/panhainan/panhainan.github.io/blob/master/project/DS-Java.md" >DS-Java 论坛系统详细介绍</a>
 </font>
