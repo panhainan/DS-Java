@@ -14,19 +14,20 @@
 			  http://www.springframework.org/schema/util
 			  http://www.springframework.org/schema/util/spring-util.xsd "
 	default-lazy-init="false">
-
+	<!-- 引入属性文件 -->
+	<context:property-placeholder location="classpath:database.properties" />
 	<!-- 使用annotation定义事务 --><!-- 支持 @Transactional 标记 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass">
-			<value>com.mysql.jdbc.Driver</value>
+			<value>${jdbc_driverClassName}</value>
 		</property>
 		<property name="jdbcUrl">
-			<value>jdbc:mysql://localhost:3306/dsjava?useUnicode=true&amp;characterEncoding=utf8</value>
+			<value>${jdbc_url}</value>
 		</property>
-		<property name="user" value="root" />
-		<property name="password" value="123456" />
+		<property name="user" value="${jdbc_username}" />
+		<property name="password" value="${jdbc_password}" />
 		<!-- 设置数据库连接池的最大连接数 -->
 		<property name="maxPoolSize">
 			<value>50</value>
