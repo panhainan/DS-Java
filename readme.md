@@ -1,2 +1,23 @@
-这个项目是我自己一个人开发的第一个的java web项目，主要是针对java的一个技术论坛。
-用到的技术，前台的有html、css、js（包含js库）、jsp等；后台的有struts2、spring、hibernate；服务器使用的是tomcat；数据库使用的是MySQL
+<font size="4">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DS-Java论坛系统，简单来说就是一个论坛，这个系统是本人的处女作。项目的取名是因为当时比较偏爱Java以及正在DreamStation这个团队里面，所以就取名为DS-Java论坛了。
+
+项目用到的相关技术、工具等
+----------
+
+开发平台及工具：Windows 8 | MyEclipse10.7
+
+涉及的编程语言：Java  |  JavaScript  |  HTML
+
+涉及的框架技术：Struts2  |  Spring  |  Hibernate
+
+其他技术：CSS  |  JQuery  |  Ajax  |  JSON  |  JSP  |  Servlet
+
+数据库：MySQL 5.6
+
+服务器：Tomcat 7.x
+
+用到的其他项目：百度富文本编辑器 UEditor
+
+点击查看<a href="https://github.com/panhainan/panhainan.github.io/blob/master/project/DS-Java.md" >DS-Java 论坛系统详细介绍</a>
+</font>
