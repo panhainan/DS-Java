@@ -22,5 +22,5 @@
 <br/><br/><br/>
 <font color="red">注意：</font>**打开根目录里面的sql文件，在数据库软件中建一个dsjava数据库，然后运行sql文件。还有数据库默认用户名root和密码123456，如果需要修改请到src下面修改database.properties文件**
 <br/><br/><br/>
-点击查看<a href="https://github.com/panhainan/panhainan.github.io/blob/master/project/DS-Java.md" >DS-Java 论坛系统详细介绍</a>
+点击查看<a href="http://panhainan.com/2015/04/27/DS-Java%E8%AE%BA%E5%9D%9B%E7%B3%BB%E7%BB%9F%E4%BB%8B%E7%BB%8D/" >DS-Java 论坛系统详细介绍</a>
 </font>
