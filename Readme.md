@@ -25,5 +25,5 @@ DS-Java论坛系统，简单来说就是一个论坛，这个系统是本人的�
 注意：**打开根目录里面的sql文件，在数据库软件中建一个dsjava数据库，然后运行sql文件。还有数据库默认用户名root和密码123456，如果需要修改请到src下面修改database.properties文件**
 
 
-点击查看<a href="http://panhainan.com/#!/blog/article/000073820471410" target="_blank">DS-Java 论坛系统详细介绍</a>
+
 
